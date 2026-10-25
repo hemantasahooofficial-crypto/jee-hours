@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JEE Question Hours</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f5f6fa;--card:#fff;--tx:#1b1d29;--mu:#7a7f94;--ac:#5b5bd6;--ok:#16a34a;--mid:#d9a50b;--bad:#e5484d;--bar:#e4e6f0}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1117;--card:#1a1d27;--tx:#eceef6;--mu:#8b90a6;--ac:#8b8bf0;--ok:#4ade80;--mid:#facc15;--bad:#f87171;--bar:#2a2e3d}}
+:root[data-theme="dark"]{--bg:#0f1117;--card:#1a1d27;--tx:#eceef6;--mu:#8b90a6;--ac:#8b8bf0;--ok:#4ade80;--mid:#facc15;--bad:#f87171;--bar:#2a2e3d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);display:flex;align-items:center;gap:12px;padding:12px 16px;z-index:5}
+header h1{font-size:19px;margin:0}#ham{background:none;color:var(--tx);font-size:26px;padding:0 6px;flex:none;width:auto}
+.app{max-width:480px;margin:0 auto;padding:0 16px 40px}
+.card{background:var(--card);border-radius:20px;padding:18px;margin-bottom:14px}
+.time{font-size:54px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums}
+.sub{text-align:center;color:var(--mu);font-size:13px;margin-top:4px}
+.btns{display:flex;gap:12px;margin-top:16px}
+button{font:inherit;border:0;border-radius:14px;padding:15px;font-weight:600;font-size:16px;flex:1;cursor:pointer;color:#fff;background:var(--ac)}
+#stop{background:var(--bad)}button:disabled{opacity:.35}button.g{background:var(--bar);color:var(--tx)}
+.prog{height:10px;background:var(--bar);border-radius:6px;margin-top:14px;overflow:hidden}.prog i{display:block;height:100%;background:var(--ac);width:0}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.stat{background:var(--card);border-radius:16px;padding:14px;text-align:center}.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--mu)}
+.chips{display:flex;gap:8px;margin-bottom:12px}.chip{flex:1;padding:10px 4px;font-size:14px;background:var(--bar);color:var(--tx)}.chip.on{background:var(--ac);color:#fff}
+.msg{background:var(--ok);color:#fff;border-radius:16px;padding:14px;margin-bottom:14px;font-weight:600;text-align:center}
+.chart{display:flex;align-items:flex-end;gap:8px;height:130px;margin:14px 0 6px}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:11px;color:var(--mu)}.col i{width:100%;background:var(--ac);border-radius:6px 6px 0 0;min-height:2px;margin-bottom:4px}.col i.g{background:var(--ok)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:12px}
+.d{aspect-ratio:1;border-radius:8px;background:var(--bar);font-size:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mu)}
+.d.t{background:var(--ac);color:#fff}.d.h{background:var(--ok);color:#fff}.d.m{background:var(--mid);color:#222}.d.l{background:var(--bad);color:#fff}.d small{font-size:9px}
+h2{margin:0 0 6px;font-size:18px}.row{display:flex;justify-content:space-between;color:var(--mu);font-size:14px;margin-top:8px}.row b{color:var(--tx)}
+.sb{height:8px;background:var(--bar);border-radius:5px;margin:4px 0 8px;overflow:hidden}.sb i{display:block;height:100%;background:var(--ac)}
+input,select,textarea{width:100%;font:inherit;padding:12px;border-radius:12px;border:1px solid var(--bar);background:var(--bg);color:var(--tx);margin:4px 0 12px}label{font-size:13px;color:var(--mu)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal>div{background:var(--card);border-radius:22px;padding:24px;width:100%;max-width:380px;max-height:90vh;overflow:auto}
+.ses{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--bar);font-size:14px}.ses small{color:var(--mu);display:block}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:9}
+#dr{position:fixed;top:0;bottom:0;left:0;width:78%;max-width:300px;background:var(--card);z-index:10;transform:translateX(-105%);transition:transform .25s;padding:calc(20px + env(safe-area-inset-top,0px)) 14px 20px}
+#dr.o{transform:none}#dr button{background:none;color:var(--tx);text-align:left;display:block;width:100%;margin-bottom:2px}#dr button.on{background:var(--bg);color:var(--ac)}
+</style></head><body>
+<header><button id="ham">☰</button><h1 id="ttl">Today</h1></header>
+<div id="ov"></div><div id="dr"><h2 id="dn" style="padding:0 14px 14px"></h2></div>
+<div class="app" id="main"></div>
+<div class="modal" id="md"><div id="mb"></div></div>
+<script>
+const KEY='jee_tracker_v2',$=id=>document.getElementById(id);
+let S={prof:null,ses:[],start:null,subj:'Physics',cele:{},theme:'auto'},view='today',calOff=0;
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const SUBJ=['Physics','Chemistry','Maths'],MIN=600;
+const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const fmt=s=>{s=Math.floor(s);return[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(n=>String(n).padStart(2,'0')).join(':')};
+const hm=s=>{const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+'h '+m+'m':m+'m'};
+const acc=(a,c)=>a?Math.round(c/a*100):null;
+const goal=()=>(S.prof&&S.prof.goal?S.prof.goal:3)*3600;
+const pts=(s,c)=>Math.floor(s/360)+(s>=goal()?20:0)+c;
+function split(a,b,f){while(a<b){const d=new Date(a),nx=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1).getTime(),e=Math.min(nx,b);f(key(d),(e-a)/1000);a=e}}
+function days(){const m={},g=k=>m[k]||(m[k]={s:0,att:0,cor:0,sub:{}});
+ S.ses.forEach(x=>{split(x.a,x.b,(k,t)=>{const o=g(k);o.s+=t;o.sub[x.sub]=(o.sub[x.sub]||0)+t});const o=g(key(new Date(x.a)));o.att+=x.att;o.cor+=x.cor});
+ if(S.start)split(S.start,Date.now(),(k,t)=>{const o=g(k);o.s+=t;o.sub[S.subj]=(o.sub[S.subj]||0)+t});return m}
+const D0={s:0,att:0,cor:0,sub:{}};
+function streaks(m){let cur=0,d=new Date();if((m[key(d)]||D0).s<MIN)d.setDate(d.getDate()-1);while((m[key(d)]||D0).s>=MIN){cur++;d.setDate(d.getDate()-1)}
+ const ks=Object.keys(m).sort();let best=0,run=0;if(ks.length){let x=new Date(ks[0]+'T00:00:00');const end=new Date();while(x<=end){if((m[key(x)]||D0).s>=MIN){run++;best=Math.max(best,run)}else run=0;x.setDate(x.getDate()+1)}}
+ return{cur,best,total:ks.filter(k=>m[k].s>=MIN).length}}
+function sum(m,keys){const o={s:0,att:0,cor:0,act:0,g:0,best:0,pts:0,sub:{}};keys.forEach(k=>{const d=m[k]||D0;o.s+=d.s;o.att+=d.att;o.cor+=d.cor;if(d.s>=MIN)o.act++;if(d.s>=goal())o.g++;o.best=Math.max(o.best,d.s);o.pts+=pts(d.s,d.cor);for(const q in d.sub)o.sub[q]=(o.sub[q]||0)+d.sub[q]});return o}
+const rows=(o,n)=>`<div class="row">Total time<b>${hm(o.s)}</b></div><div class="row">Average / ${n==7?'day':'active day'}<b>${hm(o.s/(n==7?7:Math.max(o.act,1)))}</b></div><div class="row">Best day<b>${hm(o.best)}</b></div><div class="row">Active days<b>${o.act}</b></div><div class="row">Goal-hit days<b>${o.g}</b></div><div class="row">Questions<b>${o.cor}/${o.att} ${o.att?'('+acc(o.att,o.cor)+'%)':''}</b></div><div class="row">Speed<b>${o.s>=60&&o.att?(o.att/(o.s/3600)).toFixed(1)+' q/hr':'-'}</b></div><div class="row">Points<b>${o.pts}</b></div>`;
+const subs=o=>SUBJ.map(q=>{const v=o.sub[q]||0;return`<div class="row" style="margin-top:2px">${q}<b>${hm(v)}</b></div><div class="sb"><i style="width:${o.s?v/o.s*100:0}%"></i></div>`}).join('');
+function tt(){return(days()[key(new Date())]||D0).s}
+function render(){const m=days(),td=m[key(new Date())]||D0,H=$('main'),n=new Date();let h='';
+ if(view=='today'){const left=S.prof?Math.ceil((new Date(S.prof.exam+'T00:00:00')-n)/864e5):0,st=streaks(m);
+  h=`<div id="ban" class="msg" style="display:none">🎉 Well done man, you are good to go for the betterment of yourself!</div>
+  <div class="card"><div class="sub">${n.toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})}${S.prof?' · JEE in '+left+' days':''}</div>
+  <div class="chips" style="margin-top:12px">${SUBJ.map(q=>`<button class="chip ${S.subj==q?'on':''}" ${S.start?'disabled':''} onclick="S.subj='${q}';save();render()">${q}</button>`).join('')}</div>
+  <div class="time" id="clk">00:00:00</div><div class="sub" id="sst"></div><div class="prog"><i id="pb"></i></div><div class="sub" id="gl"></div>
+  <div class="btns"><button id="play" onclick="play()">▶ Play</button><button id="stop" onclick="stop()">■ Stop</button></div></div>
+  <div class="stats"><div class="stat"><b id="pt">0</b><span>Points today</span></div><div class="stat"><b>🔥 ${st.cur}</b><span>Day streak</span></div><div class="stat"><b>${td.cor}/${td.att}</b><span>Questions correct</span></div><div class="stat"><b>${td.att?acc(td.att,td.cor)+'%':'-'}</b><span>Accuracy today</span></div></div>
+  <div class="card"><h2>Today by subject</h2>${subs({s:td.s,sub:td.sub})}</div>
+  <p class="sub">Points: 10 per hour + 20 goal bonus + 1 per correct question. Streak day = 10+ min.</p>`}
+ if(view=='week'){const off=(n.getDay()+6)%7,ks=[];for(let i=0;i<7;i++)ks.push(key(new Date(n.getFullYear(),n.getMonth(),n.getDate()-off+i)));const v=ks.map(k=>(m[k]||D0).s),mx=Math.max(goal(),...v),o=sum(m,ks);
+  h=`<div class="card"><h2>This week</h2><div class="chart">${v.map((x,i)=>`<div class="col"><span>${x?hm(x):''}</span><i class="${x>=goal()?'g':''}" style="height:${x/mx*80}%"></i>${'MTWTFSS'[i]}</div>`).join('')}</div>${rows(o,7)}</div><div class="card"><h2>Subjects</h2>${subs(o)}</div>`}
+ if(view=='month'){const dim=new Date(n.getFullYear(),n.getMonth()+1,0).getDate(),ks=[];for(let i=1;i<=dim;i++)ks.push(key(new Date(n.getFullYear(),n.getMonth(),i)));const o=sum(m,ks);
+  h=`<div class="card"><h2>${n.toLocaleDateString(undefined,{month:'long',year:'numeric'})}</h2>${rows(o,30)}</div><div class="card"><h2>Subjects</h2>${subs(o)}</div>`}
+ if(view=='streak'){const st=streaks(m),all=sum(m,Object.keys(m));
+  h=`<div class="stats"><div class="stat"><b>🔥 ${st.cur}</b><span>Current streak</span></div><div class="stat"><b>🏆 ${st.best}</b><span>Longest streak</span></div><div class="stat"><b>${st.total}</b><span>Total active days</span></div><div class="stat"><b>${hm(all.s)}</b><span>All-time hours</span></div></div><div class="card"><h2>All time</h2>${rows(all,30)}</div><div class="card"><h2>Subjects</h2>${subs(all)}</div>`}
+ if(view=='cal'){const d0=new Date(n.getFullYear(),n.getMonth()+calOff,1),y=d0.getFullYear(),mo=d0.getMonth(),dim=new Date(y,mo+1,0).getDate(),fi=(d0.getDay()+6)%7,ks=[];let c='MTWTFSS'.split('').map(x=>`<div class="sub">${x}</div>`).join('')+'<div></div>'.repeat(fi);
+  for(let i=1;i<=dim;i++){const k=key(new Date(y,mo,i)),d=m[k]||D0,a=acc(d.att,d.cor);ks.push(k);c+=`<div class="d ${a!=null?(a>=80?'h':a>=60?'m':'l'):d.s>=MIN?'t':''}">${i}<small>${a!=null?a+'%':d.s?hm(d.s):''}</small></div>`}
+  const o=sum(m,ks);h=`<div class="card"><div class="btns" style="margin:0 0 8px"><button class="g" onclick="calOff--;render()">‹</button><h2 style="flex:3;text-align:center;margin:0;align-self:center">${d0.toLocaleDateString(undefined,{month:'long',year:'numeric'})}</h2><button class="g" onclick="calOff++;render()">›</button></div><div class="cal">${c}</div><div class="sub" style="margin-top:10px">Green 80%+ · Yellow 60–79% · Red under 60% accuracy · Purple = time logged, no questions entered</div></div><div class="card">${rows(o,30)}</div>`}
+ if(view=='log'){const L=S.ses.slice().reverse().slice(0,60);h=`<div class="card"><h2>Sessions</h2><div class="sub" style="text-align:left">Tap a session to edit its questions.</div>${L.length?L.map(x=>`<div class="ses"><div onclick="ask('${x.id}')"><b>${x.sub}</b> · ${hm((x.b-x.a)/1000)}<small>${new Date(x.a).toLocaleString(undefined,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})} · ${x.cor}/${x.att} correct ${x.att?'('+acc(x.att,x.cor)+'%)':''}</small></div><button class="g" style="flex:none;padding:8px 12px" onclick="del('${x.id}')">✕</button></div>`).join(''):'<p class="sub">No sessions yet.</p>'}</div>`}
+ if(view=='set'){const p=S.prof||{};h=`<div class="card"><h2>Profile</h2><label>Name</label><input id="s1" value="${p.name||''}"><label>Age</label><input id="s2" type="number" value="${p.age||''}"><label>Daily goal (hours)</label><input id="s3" type="number" step="0.5" value="${p.goal||3}"><label>JEE exam date</label><input id="s4" type="date" value="${p.exam||'2028-01-24'}"><label>Theme</label><select id="s5">${['auto','light','dark'].map(t=>`<option ${S.theme==t?'selected':''}>${t}</option>`).join('')}</select><button onclick="setSave()">Save settings</button></div>
+  <div class="card"><h2>Notifications</h2><div class="sub" style="text-align:left;margin-bottom:10px">Shows start time when the timer starts, if your browser allows it.</div><button onclick="perm()">Enable notifications</button></div>
+  <div class="card"><h2>Backup</h2><textarea id="bk" rows="3" placeholder="Backup text appears here"></textarea><div class="btns" style="margin-top:0"><button class="g" onclick="$('bk').value=JSON.stringify(S)">Export</button><button class="g" onclick="imp()">Import</button></div><button style="margin-top:12px;background:var(--bad)" onclick="if(confirm('Erase all data?')){S={prof:S.prof,ses:[],start:null,subj:'Physics',cele:{},theme:S.theme};save();render()}">Erase all data</button></div>`}
+ H.innerHTML=h;$('ttl').textContent={today:'Today',week:'Week review',month:'Month review',streak:'Streaks & totals',cal:'Accuracy calendar',log:'Sessions',set:'Settings'}[view];
+ $('dr').innerHTML=`<h2 style="padding:0 14px 14px">${S.prof?'Hi, '+S.prof.name+' 👋':''}</h2>`+[['today','⏱ Today'],['week','📊 Week'],['month','🗓 Month'],['streak','🔥 Streaks'],['cal','🎯 Accuracy calendar'],['log','📝 Sessions'],['set','⚙ Settings']].map(([v,t])=>`<button class="${view==v?'on':''}" onclick="go('${v}')">${t}</button>`).join('');tick()}
+function tick(){const t=tt(),m=S.start;document.title=m?'⏱ '+fmt(t):'JEE Question Hours';if(view!='today')return;
+ $('clk').textContent=fmt(t);$('pb').style.width=Math.min(100,t/goal()*100)+'%';$('gl').textContent=t>=goal()?'Goal reached ✅':hm(goal()-t)+' left to reach '+goal()/3600+' hours';
+ const d=days()[key(new Date())]||D0;$('pt').textContent=pts(t,d.cor);$('play').disabled=!!m;$('stop').disabled=!m;$('play').textContent=m?'Running…':'▶ Play';
+ $('sst').textContent=m?'Started '+new Date(m).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' · '+S.subj:'Question solving time only';$('ban').style.display=t>=goal()?'block':'none';
+ const k=key(new Date());if(t>=goal()&&!S.cele[k]){S.cele[k]=1;save();pop('<div style="text-align:center"><div style="font-size:54px">🏆</div><p style="font-size:18px;font-weight:600">Well done man, you are good to go for the betterment of yourself!</p><button onclick="shut()">Thanks!</button></div>')}}
+function pop(h){$('mb').innerHTML=h;$('md').style.display='flex'}function shut(){$('md').style.display='none'}
+const LN=()=>window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.LocalNotifications;
+async function notify(){const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),body=S.subj+' · started at '+t;try{const ln=LN();if(ln){const p=await ln.requestPermissions();if(p.display!='granted')return;await ln.schedule({notifications:[{id:1,title:'Question timer running',body:body,ongoing:true,autoCancel:false,schedule:{at:new Date(Date.now()+300)}}]})}else if('Notification' in window&&Notification.permission=='granted')new Notification('Question timer running',{body:body,tag:'tmr'})}catch(e){}}
+async function unnotify(){try{const ln=LN();if(ln)await ln.cancel({notifications:[{id:1}]})}catch(e){}}
+function play(){S.start=Date.now();save();notify();render()}
+function stop(){if(!S.start)return;const x={id:'s'+Date.now(),a:S.start,b:Date.now(),sub:S.subj,att:0,cor:0};S.ses.push(x);S.start=null;save();unnotify();render();ask(x.id)}
+function ask(id){const x=S.ses.find(s=>s.id==id);if(!x)return;pop(`<h2>${x.sub} · ${hm((x.b-x.a)/1000)}</h2><div class="sub" style="text-align:left;margin-bottom:10px">How many questions did you solve in this session?</div><label>Questions attempted</label><input id="qa" type="number" min="0" value="${x.att||''}"><label>Questions correct</label><input id="qc" type="number" min="0" value="${x.cor||''}"><button onclick="qs('${id}')">Save</button>`)}
+function qs(id){const x=S.ses.find(s=>s.id==id),a=Math.max(0,+$('qa').value||0),c=Math.min(a,Math.max(0,+$('qc').value||0));x.att=a;x.cor=c;save();shut();render()}
+function del(id){if(confirm('Delete this session?')){S.ses=S.ses.filter(s=>s.id!=id);save();render()}}
+function go(v){view=v;calOff=0;$('dr').classList.remove('o');$('ov').style.display='none';render();scrollTo(0,0)}
+$('ham').onclick=()=>{$('dr').classList.add('o');$('ov').style.display='block'};$('ov').onclick=()=>{$('dr').classList.remove('o');$('ov').style.display='none'};
+function theme(){const r=document.documentElement;S.theme=='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',S.theme)}
+function setSave(){S.prof={name:$('s1').value||'Aspirant',age:$('s2').value,goal:Math.max(.5,+$('s3').value||3),exam:$('s4').value||'2028-01-24'};S.theme=$('s5').value;save();theme();go('today')}
+function perm(){try{Notification.requestPermission().then(r=>alert('Notifications: '+r))}catch(e){alert('Notifications are not supported here.')}}
+function imp(){try{const o=JSON.parse($('bk').value);if(o&&o.ses){S=Object.assign(S,o);save();theme();render()}}catch(e){alert('Invalid backup text')}}
+function onboard(){pop(`<h2>Welcome 👋</h2><div class="sub" style="text-align:left;margin-bottom:10px">Let’s set up your JEE 2028 question-hours tracker.</div><label>Your name</label><input id="o1"><label>Age</label><input id="o2" type="number"><label>Daily question-solving goal (hours)</label><input id="o3" type="number" step="0.5" value="3"><label>JEE exam date</label><input id="o4" type="date" value="2028-01-24"><button onclick="ob()">Start</button>`)}
+function ob(){const n=$('o1').value.trim();if(!n){$('o1').focus();return}S.prof={name:n,age:$('o2').value,goal:Math.max(.5,+$('o3').value||3),exam:$('o4').value||'2028-01-24'};save();shut();render()}
+theme();render();if(!S.prof)onboard();setInterval(tick,1000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
+</script></body></html>
